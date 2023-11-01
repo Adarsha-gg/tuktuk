@@ -43,3 +43,58 @@ chart_data = pd.DataFrame({
 
 st.title(f"You opened tiktok {i} amount of times from {first_date} to {last_date}")
 st.bar_chart(chart_data, x="Time in NPT", y="Opened",)
+
+
+# for total number of videos
+Video = data["Activity"]["Video Browsing History"]["VideoList"]
+total_videos = len(Video)
+
+total_time = int((total_videos * 15)/60)    
+total_hours = int(total_time/60)
+
+st.caption(f"You watched over {total_videos} videos in just 3 months. Get A LIFE!!!\
+          You might say 'WeLl I DoNt WaTcH A LoT I JuSt ScRoLl'. Even if you watch 15 seconds of a video\
+            on avg that {total_time} minutes which is {total_hours} hours " )
+
+
+#for total number of shared videos
+shared = data["Activity"]["Share History"]["ShareHistoryList"]
+total_shared = len(shared)
+
+st.caption(f"You sent {total_shared} videos to others")
+# for top 3 people you text
+
+comments = data["Comment"]["Comments"]["CommentsList"]
+total_comments = len(comments)
+st.caption(f"You commented on total of {total_comments} videos")
+
+chats =data ["Direct Messages"]["Chat History"]["ChatHistory"]
+all_people = list(chats.keys())
+
+total_texts = {}
+first = 0
+first_name = ""
+second = 0
+seocnd_name = ""
+third = 0
+third_name = ""
+for items in all_people:
+    if len(chats[items]) > first:
+        if total_texts[first_name] in total_texts:
+            pass
+        first = second
+        second = third
+        first =len(chats[items])
+        total_texts[items] = len(chats[items])
+
+    elif len(chats[items]) > second:
+        second = third
+        second = len(chats[items])
+        total_texts[items] = len(chats[items])
+
+    elif len(chats[items]) > third:
+        third = len(chats[items])
+        total_texts[items] = len(chats[items])
+
+
+print(total_texts)
