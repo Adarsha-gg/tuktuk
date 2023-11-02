@@ -21,6 +21,7 @@ def date_formatter(date):
         day = date_obj.strftime("%d")
         return f"{month} {day}, {year}"
 
+@st.cache_data
 def screentime():
     i = 0 # counter 
     time = [] # intialize a list to store time values
@@ -49,12 +50,12 @@ def screentime():
     #plot it
     chart_data = pd.DataFrame({
         "Time in NPT": frequencies.keys(),
-        "Opened": frequencies.values()
+        "Open Count": frequencies.values()
         
     })
 
     st.title(f"You opened tiktok {i} amount of times from {first_date} to {last_date}")
-    st.bar_chart(chart_data, x="Time in NPT", y="Opened",)
+    st.bar_chart(chart_data, x="Time in NPT", y="Open Count",)
 
 
 def watchtime():
@@ -101,11 +102,14 @@ def fav_people():
         texts.append(top_three[j][1])
         st.caption(f"{names[j]} with {texts[j]} texts")
 
+
 def comment_count():
 # total comments
     comments = data["Comment"]["Comments"]["CommentsList"]
     total_comments = len(comments)
     st.caption(f"You commented on total of {total_comments} videos")    
+
+
 # open the data file
 if upload is not None:
     
@@ -121,13 +125,13 @@ if upload is not None:
         st.session_state.share = False        
 
     def click_button():
-        st.session_state.clicked = True
+        st.session_state.clicked = not st.session_state.clicked
 
     def comment_button():
-        st.session_state.comment = True
+        st.session_state.comment = not st.session_state.comment
 
     def share_button():
-        st.session_state.share = True
+        st.session_state.share = not st.session_state.share
         
     with col1:
         st.button("test?",on_click=click_button)
