@@ -88,6 +88,12 @@ for items in all_people:
 
 highest = Counter(total_texts) # counter uses dictionary to sort it by value
 top_three = highest.most_common(3) # return the highest 3 values
-names = []
+names = [] 
+texts = []
 
-print(names)
+#to get only the names of top three people
+st.caption(f"Your top 3 frns are :")
+for j in range(0,3):
+    names.append(top_three[j][0][18:-1])
+    texts.append(top_three[j][1])
+    st.caption(f"{names[j]} with {texts[j]} texts")
