@@ -55,7 +55,7 @@ def screentime():
     })
 
     st.title(f"You opened tiktok {i} amount of times from {first_date} to {last_date}")
-    st.bar_chart(chart_data, x="Time in NPT", y="Open Count",)
+    st.bar_chart(chart_data, x="Time in NPT", y="Open Count",height=280)
 
 
 def watchtime():
@@ -115,8 +115,7 @@ if upload is not None:
     
     data = load_data(upload)
     #convert dates like 2020-2-3 to 2023 feb 3 
-    screentime()
-
+   
     if 'clicked' not in st.session_state:
         st.session_state.clicked = False
     if 'comment' not in st.session_state:
@@ -133,18 +132,21 @@ if upload is not None:
     def share_button():
         st.session_state.share = not st.session_state.share
         
+    screentime()
+    watchtime()
+
     with col1:
-        st.button("test?",on_click=click_button)
+        st.button("Highest texts",on_click=click_button)
         if st.session_state.clicked:
             fav_people()
 
     with col2:
-        st.button("test2",on_click=comment_button)
+        st.button("Total Comments",on_click=comment_button)
         if st.session_state.comment:
             comment_count()
 
     with col3:
-        st.button("test3",on_click=share_button)
+        st.button("Shared Videos",on_click=share_button)
         if st.session_state.share:
             shares()
 
